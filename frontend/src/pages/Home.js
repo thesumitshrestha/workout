@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useWorkoutsContext } from '../hooks/useWorkoutsContext';
 import axios from 'axios';
 import WorkoutDetails from '../components/WorkoutDetails';
 import WorkoutForm from '../components/WorkoutForm';
 
 const Home = () => {
-  const [workouts, setWorkouts] = useState([]);
+  const { workouts, dispatch } = useWorkoutsContext();
+
   useEffect(() => {
     const fetchWorkout = async () => {
-      const res = await axios.get('/api/workouts');
-      setWorkouts(res.data);
+      const res = await axios.get('http://localhost:5003/api/workouts');
+      dispatch({ type: 'SET_WORKOUTS', payload: res.data });
     };
     fetchWorkout();
   }, []);

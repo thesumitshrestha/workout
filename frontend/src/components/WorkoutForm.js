@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useWorkoutsContext } from '../hooks/useWorkoutsContext';
 import axios from 'axios';
 
 const WorkoutForm = () => {
+  const { dispatch } = useWorkoutsContext();
   const [title, setTitle] = useState('');
   const [load, setLoad] = useState('');
   const [reps, setReps] = useState('');
@@ -20,23 +22,11 @@ const WorkoutForm = () => {
         },
       });
       console.log(res.data);
+      console.log('NEW WORKOUT ADDED');
+      dispatch({ type: 'CREATE_WORKOUT', payload: res.data });
     } catch (error) {
-      //   .then((response) => {
-      //     console.log('Response', response.data);
-      //   })
       console.log(error);
     }
-
-    // if (!response.ok) {
-    //   setError(json.error);
-    // }
-    // if (response.ok) {
-    //   setTitle('');
-    //   setLoad('');
-    //   setReps('');
-    //   setError(null);
-    //   console.log('New Workout Added', json);
-    // }
   };
 
   return (
